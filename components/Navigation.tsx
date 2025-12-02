@@ -29,7 +29,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '24px' }}>✓</span>
-          <h1 style={{ margin: 0, fontSize: '20px', color: '#333' }}>Task Tracker</h1>
+          <h1 style={{ margin: 0, fontSize: '20px', color: '#333' }}>PAGAN</h1>
         </div>
 
         <div style={{ display: 'flex', gap: '4px' }}>
