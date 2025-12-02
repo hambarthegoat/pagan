@@ -1,16 +1,12 @@
-// Observer Pattern: Observer Interface
 export interface Observer {
   update(data: any): void;
 }
-
-// Subject Interface
 export interface Subject {
   attach(observer: Observer): void;
   detach(observer: Observer): void;
   notify(data: any): void;
 }
 
-// Concrete Subject: Notification Subject
 export class NotificationSubject implements Subject {
   private observers: Observer[] = [];
 
