@@ -137,4 +137,24 @@ export class ProjectRepository {
       });
     });
   }
+
+  async update(
+    projectId: string,
+    data: { projectName?: string; description?: string }
+  ): Promise<void> {
+    const updateData: any = {};
+    if (data.projectName) updateData.projectName = data.projectName;
+    if (data.description) updateData.description = data.description;
+
+    await prisma.project.update({
+      where: { id: projectId },
+      data: updateData,
+    });
+  }
+
+  async delete(projectId: string): Promise<void> {
+    await prisma.project.delete({
+      where: { id: projectId },
+    });
+  }
 }

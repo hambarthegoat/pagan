@@ -1,0 +1,171 @@
+### Task Tracker API - HTTP Requests
+### Use this file with REST Client extension in VS Code or similar tools
+
+@baseUrl = http://localhost:3000/api
+@contentType = application/json
+
+### ============================================
+### PROJECTS
+### ============================================
+
+### Get all projects
+GET {{baseUrl}}/projects
+
+### Get all projects for a specific user
+GET {{baseUrl}}/projects?userId=USER_ID_HERE
+
+### Get specific project
+GET {{baseUrl}}/projects/PROJECT_ID_HERE
+
+### Create new project
+POST {{baseUrl}}/projects
+Content-Type: {{contentType}}
+
+{
+  "projectName": "New Website Project",
+  "description": "Building a brand new website",
+  "creatorId": "USER_ID_FROM_PRISMA_STUDIO",
+  "memberEmails": ["john@example.com", "jane@example.com"]
+}
+
+### Update project
+PUT {{baseUrl}}/projects/PROJECT_ID_HERE
+Content-Type: {{contentType}}
+
+{
+  "projectName": "Updated Project Name",
+  "description": "Updated project description"
+}
+
+### Delete project
+DELETE {{baseUrl}}/projects/PROJECT_ID_HERE
+
+
+### ============================================
+### TASKS
+### ============================================
+
+### Get all tasks
+GET {{baseUrl}}/tasks
+
+### Get tasks for a specific project
+GET {{baseUrl}}/tasks?projectId=PROJECT_ID_HERE
+
+### Get specific task
+GET {{baseUrl}}/tasks/TASK_ID_HERE
+
+### Create new task
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Implement User Authentication",
+  "description": "Add login and registration functionality",
+  "projectId": "PROJECT_ID_FROM_PRISMA_STUDIO",
+  "deadline": "2025-12-31T23:59:59Z",
+  "assigneeIds": ["USER_ID_1", "USER_ID_2"],
+  "priority": "High"
+}
+
+### Update task
+PUT {{baseUrl}}/tasks/TASK_ID_HERE
+Content-Type: {{contentType}}
+
+{
+  "title": "Updated Task Title",
+  "description": "Updated description",
+  "progress": 75,
+  "status": "In Progress"
+}
+
+### Update task progress only
+PUT {{baseUrl}}/tasks/TASK_ID_HERE
+Content-Type: {{contentType}}
+
+{
+  "progress": 85
+}
+
+### Delete task
+DELETE {{baseUrl}}/tasks/TASK_ID_HERE
+
+
+### ============================================
+### SUBTASKS
+### ============================================
+
+### Get subtasks for a task
+GET {{baseUrl}}/subtasks?taskId=TASK_ID_HERE
+
+### Create new subtask
+POST {{baseUrl}}/subtasks
+Content-Type: {{contentType}}
+
+{
+  "taskId": "TASK_ID_FROM_PRISMA_STUDIO",
+  "title": "Create database schema"
+}
+
+### Update subtask progress
+PUT {{baseUrl}}/subtasks/SUBTASK_ID_HERE
+Content-Type: {{contentType}}
+
+{
+  "progress": 50
+}
+
+### Complete subtask
+PATCH {{baseUrl}}/subtasks/SUBTASK_ID_HERE
+Content-Type: {{contentType}}
+
+{
+  "complete": true
+}
+
+### Delete subtask
+DELETE {{baseUrl}}/subtasks/SUBTASK_ID_HERE
+
+
+### ============================================
+### COMMENTS
+### ============================================
+
+### Get comments for a task
+GET {{baseUrl}}/comments?taskId=TASK_ID_HERE
+
+### Add comment to task
+POST {{baseUrl}}/comments
+Content-Type: {{contentType}}
+
+{
+  "taskId": "TASK_ID_FROM_PRISMA_STUDIO",
+  "userId": "USER_ID_FROM_PRISMA_STUDIO",
+  "content": "This looks great! Good progress."
+}
+
+
+### ============================================
+### FILE ATTACHMENTS
+### ============================================
+
+### Get files for a task
+GET {{baseUrl}}/files?taskId=TASK_ID_HERE
+
+### Upload file to task (multipart/form-data)
+# Note: This needs to be done via Postman, Insomnia, or similar tool
+# POST {{baseUrl}}/files
+# Content-Type: multipart/form-data
+# Body:
+#   - taskId: TASK_ID_HERE
+#   - userId: USER_ID_HERE
+#   - file: [select file]
+
+
+### ============================================
+### HELPFUL QUERIES
+### ============================================
+
+### Get all data to find IDs
+GET {{baseUrl}}/projects
+###
+GET {{baseUrl}}/tasks

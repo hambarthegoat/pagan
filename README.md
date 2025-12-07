@@ -2,6 +2,23 @@
 
 A full-stack task tracking application built with Next.js, Prisma, and PostgreSQL, implementing **Layered Architecture**, **Observer Pattern**, and **Strategy Pattern**.
 
+## 📚 Documentation Quick Links
+
+- **[QUICK_START.md](QUICK_START.md)** - Get started in 5 minutes ⚡
+- **[API_GUIDE.md](API_GUIDE.md)** - Complete API documentation with examples 📖
+- **[FEATURES_COMPLETE.md](FEATURES_COMPLETE.md)** - Full list of implemented features ✅
+- **[api-requests.http](api-requests.http)** - Ready-to-use HTTP requests for testing 🧪
+
+## ✨ What's New - All CRUD Operations Implemented!
+
+✅ **Complete Project Management** - Create, Read, Update, Delete  
+✅ **Full Task Management** - All operations including progress tracking  
+✅ **Subtask System** - Add, update, complete, and delete subtasks  
+✅ **Comment System** - Add and view task comments  
+✅ **File Attachments** - Upload and retrieve task files  
+
+All endpoints are fully functional and tested!
+
 ## 🏗️ Architecture
 
 This project follows a **Layered Architecture** pattern:
@@ -199,21 +216,43 @@ Based on the class diagram:
 - `GET /api/projects` - Get all projects
 - `GET /api/projects?id={id}` - Get project by ID
 - `GET /api/projects?userId={userId}` - Get user's projects
+- `GET /api/projects/{id}` - Get specific project
+- `PUT /api/projects/{id}` - Update project
+- `DELETE /api/projects/{id}` - Delete project
 
 ### Tasks
 - `POST /api/tasks` - Create task
 - `GET /api/tasks` - Get all tasks
 - `GET /api/tasks?id={id}` - Get task by ID
 - `GET /api/tasks?projectId={projectId}` - Get project tasks
-- `PATCH /api/tasks/{id}/progress` - Update task progress
+- `GET /api/tasks/{id}` - Get specific task
+- `PUT /api/tasks/{id}` - Update task (progress, status, details)
+- `DELETE /api/tasks/{id}` - Delete task
 - `POST /api/tasks/{id}/files` - Upload file
 - `GET /api/tasks/{id}/files` - Get task files
+
+### Subtasks (New!)
+- `POST /api/subtasks` - Create subtask
+- `GET /api/subtasks?taskId={taskId}` - Get task subtasks
+- `PUT /api/subtasks/{id}` - Update subtask progress
+- `PATCH /api/subtasks/{id}` - Complete subtask
+- `DELETE /api/subtasks/{id}` - Delete subtask
+
+### Comments (New!)
+- `POST /api/comments` - Add comment to task
+- `GET /api/comments?taskId={taskId}` - Get task comments
+
+### Files (New!)
+- `POST /api/files` - Upload file to task
+- `GET /api/files?taskId={taskId}` - Get task files
 
 ### Users
 - `POST /api/users` - Register/Login user
 - `GET /api/users` - Get all users
 - `GET /api/users?id={id}` - Get user by ID
 - `GET /api/users?email={email}` - Get user by email
+
+**📖 For detailed API documentation with examples, see [API_GUIDE.md](API_GUIDE.md)**
 
 ## 🛠️ Development Commands
 

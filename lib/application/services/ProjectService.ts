@@ -106,4 +106,43 @@ export class ProjectService {
   async getAllProjects(): Promise<Project[]> {
     return await this.projectRepository.findAll();
   }
+
+  async updateProject(
+    projectId: string,
+    data: { projectName?: string; description?: string }
+  ): Promise<void> {
+    try {
+      await this.projectRepository.update(projectId, data);
+    } catch (error) {
+      console.error('Error updating project:', error);
+      throw error;
+    }
+  }
+
+  async deleteProject(projectId: string): Promise<void> {
+    try {
+      await this.projectRepository.delete(projectId);
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      throw error;
+    }
+  }
+
+  async addMemberToProject(projectId: string, userId: string): Promise<void> {
+    try {
+      await this.projectRepository.addMember(projectId, userId);
+    } catch (error) {
+      console.error('Error adding member to project:', error);
+      throw error;
+    }
+  }
+
+  async removeMemberFromProject(projectId: string, userId: string): Promise<void> {
+    try {
+      await this.projectRepository.removeMember(projectId, userId);
+    } catch (error) {
+      console.error('Error removing member from project:', error);
+      throw error;
+    }
+  }
 }

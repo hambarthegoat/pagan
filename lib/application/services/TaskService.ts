@@ -123,7 +123,7 @@ export class TaskService {
       task.updateProgress(value);
 
       // Use Strategy pattern to update status
-      const newStatus = this.statusContext.executeStrategy(value);
+      const newStatus = this.statusContext.getStatus({ progress: value });
       task.changeStatus(newStatus);
 
       // Save updated task
@@ -191,5 +191,114 @@ export class TaskService {
 
   async getTaskFiles(taskId: string): Promise<FileAttachment[]> {
     return await this.fileStorageService.getFilesByTaskId(taskId);
+  }
+
+  async updateTask(
+    taskId: string,
+    data: { title?: string; description?: string; deadline?: Date | string; status?: string }
+  ): Promise<void> {
+    try {
+      const task = await this.taskRepository.findById(taskId);
+      if (!task) {
+        throw new Error('Task not found');
+      }
+
+      // Update task using repository
+      await this.taskRepository.update(taskId, data);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  }
+
+  async deleteTask(taskId: string): Promise<void> {
+    try {
+      await this.taskRepository.delete(taskId);
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw error;
+    }
+  }
+
+  async addSubtask(taskId: string, title: string): Promise<{ success: boolean; subtaskId: string }> {
+    try {
+      const task = await this.taskRepository.findById(taskId);
+      if (!task) {
+        throw new Error('Task not found');
+      }
+
+      const subtaskId = uuidv4();
+      await this.taskRepository.addSubtask(taskId, subtaskId, title);
+
+      return { success: true, subtaskId };
+    } catch (error) {
+      console.error('Error adding subtask:', error);
+      throw error;
+    }
+  }
+
+  async updateSubtaskProgress(subtaskId: string, progress: number): Promise<void> {
+    try {
+      await this.taskRepository.updateSubtask(subtaskId, { progress });
+    } catch (error) {
+      console.error('Error updating subtask progress:', error);
+      throw error;
+    }
+  }
+
+  async completeSubtask(subtaskId: string): Promise<void> {
+    try {
+      await this.taskRepository.updateSubtask(subtaskId, { 
+        progress: 100, 
+        status: 'Completed' 
+      });
+    } catch (error) {
+      console.error('Error completing subtask:', error);
+      throw error;
+    }
+  }
+
+  async getSubtasks(taskId: string): Promise<any[]> {
+    try {
+      return await this.taskRepository.getSubtasks(taskId);
+    } catch (error) {
+      console.error('Error fetching subtasks:', error);
+      throw error;
+    }
+  }
+
+  async deleteSubtask(subtaskId: string): Promise<void> {
+    try {
+      await this.taskRepository.deleteSubtask(subtaskId);
+    } catch (error) {
+      console.error('Error deleting subtask:', error);
+      throw error;
+    }
+  }
+
+  async addComment(taskId: string, userId: string, content: string): Promise<{ success: boolean; commentId: string }> {
+    try {
+      const task = await this.taskRepository.findById(taskId);
+      if (!task) {
+        throw new Error('Task not found');
+      }
+
+      const commentId = uuidv4();
+      await this.taskRepository.addComment(taskId, userId, commentId, content);
+
+      return { success: true, commentId };
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      throw error;
+    }
+  }
+
+  async getComments(taskId: string): Promise<any[]> {
+    try {
+      return await this.taskRepository.getComments(taskId);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      throw error;
+    }
   }
 }
